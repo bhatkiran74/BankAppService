@@ -13,14 +13,24 @@ import org.springframework.security.web.SecurityFilterChain;
 public class ProjectSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(authorize ->
-                        authorize
-                                .requestMatchers("/api/vi/myAccount","/api/vi/myBalance","/api/vi/myCards","/api/vi/myLoans").authenticated()
-                                .requestMatchers("/api/vi/contact","/api/vi/notices").permitAll()
-                                .anyRequest().authenticated()
-                )
+
+//        /* Access Denid for all */
+        http.authorizeHttpRequests(authorize -> authorize.anyRequest().denyAll())
                 .formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults());
+//        /* Access granted for all */
+//        http.authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll())
+//                .formLogin(Customizer.withDefaults())
+//                .httpBasic(Customizer.withDefaults());
+
+//        http.authorizeHttpRequests(authorize ->
+//                        authorize
+//                                .requestMatchers("/api/v1/myAccount","/api/vi/myBalance","/api/vi/myCards","/api/vi/myLoans").authenticated()
+//                                .requestMatchers("/api/v1/contact","/api/vi/notices").permitAll()
+//                                .anyRequest().authenticated()
+//                )
+//                .formLogin(Customizer.withDefaults())
+//                .httpBasic(Customizer.withDefaults());
 
         return http.build();
     }
