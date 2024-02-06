@@ -8,6 +8,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -32,19 +34,35 @@ public class ProjectSecurityConfig {
 
     @Bean
     public InMemoryUserDetailsManager inMemoryUserDetailsManager(){
+        /* Approach 1 */
+//        UserDetails user = User.withDefaultPasswordEncoder()
+//                .username("kiran")
+//                .password("kiran123")
+//                .authorities("USER")
+//                .build();
+//
+//        UserDetails admin = User.withDefaultPasswordEncoder()
+//                .username("admin")
+//                .password("admin123")
+//                .authorities("ADMIN")
+//                .build();
 
-        UserDetails user = User.withDefaultPasswordEncoder()
-                .username("kiran")
+        /* Approach 2 */
+        UserDetails user = User.withUsername("kiran")
                 .password("kiran123")
                 .authorities("USER")
                 .build();
 
-        UserDetails admin = User.withDefaultPasswordEncoder()
-                .username("admin")
+        UserDetails admin = User.withUsername("admin")
                 .password("admin123")
                 .authorities("ADMIN")
                 .build();
 
         return new InMemoryUserDetailsManager(user,admin);
+    }
+    /* Approach 2 */
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return NoOpPasswordEncoder.getInstance();
     }
 }
