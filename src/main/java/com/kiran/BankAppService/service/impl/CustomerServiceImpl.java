@@ -7,6 +7,7 @@ import com.kiran.BankAppService.repository.CustomerRepository;
 import com.kiran.BankAppService.service.CustomerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,6 +16,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
     private CustomerRepository customerRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     /**
      * Registers a new user based on the provided customer request.
@@ -26,6 +30,7 @@ public class CustomerServiceImpl implements CustomerService {
      */
     @Override
     public CustomerResponse registerUser(CustomerRequest request) {
+        request.setPwd(passwordEncoder.encode(request.getPwd()));
         Customer customer = mapToCustomerEntity(request);
         Customer savedCustomer = customerRepository.save(customer);
         return mapToCustomerResponseDto(savedCustomer);
@@ -33,10 +38,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     private CustomerResponse mapToCustomerResponseDto(Customer savedCustomer) {
         return CustomerResponse.builder()
-                .id(savedCustomer.getId())
                 .email(savedCustomer.getEmail())
-                .pwd(savedCustomer.getPwd())
-                .role(savedCustomer.getRole())
                 .build();
     }
 

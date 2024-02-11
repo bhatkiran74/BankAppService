@@ -26,8 +26,8 @@ public class LoginController {
      * retrieves the response, and returns it with an HTTP OK status.
      */
     @PostMapping("/register")
-    ResponseEntity<CustomerResponse> registerUser(@RequestBody CustomerRequest customerRequest){
+    ResponseEntity<String> registerUser(@RequestBody CustomerRequest customerRequest){
         CustomerResponse customerResponse = customerService.registerUser(customerRequest);
-        return new ResponseEntity<>(customerResponse, HttpStatus.OK);
+        return new ResponseEntity<>("Successfully "+customerResponse.getEmail()+" Registered ", HttpStatus.OK);
     }
 }
