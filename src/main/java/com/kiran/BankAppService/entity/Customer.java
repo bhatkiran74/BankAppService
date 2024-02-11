@@ -12,6 +12,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Customer {
 
     @Id
