@@ -18,6 +18,6 @@ public class AccountController {
 
     @GetMapping("/accountDetails")
     public ResponseEntity<String> getAccount(){
-      return new ResponseEntity<>("Account page",HttpStatus.OK);
+      return new ResponseEntity<>("Account information page",HttpStatus.OK);
     }
 }
