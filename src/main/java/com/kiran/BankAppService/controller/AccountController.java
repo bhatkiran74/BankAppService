@@ -15,4 +15,9 @@ public class AccountController {
     public ResponseEntity<String> getAccountDetails() {
         return new ResponseEntity<>("Account Details...", HttpStatus.OK);
     }
+
+    @GetMapping("/accountDetails")
+    public ResponseEntity<String> getAccount(){
+      return new ResponseEntity<>("Account information page",HttpStatus.OK);
+    }
 }
